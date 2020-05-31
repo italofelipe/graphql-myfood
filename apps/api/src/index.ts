@@ -1,10 +1,9 @@
-import server from './server'
+import server from './server';
 
+const { PORT: port = 4000 } = process.env;
+const main = async (): Promise<void> => {
+  await server.start({ port });
+  console.log(`Listening on port ${port}`);
+};
 
-const { PORT: port = 4000 } = process.env
-const main = async(): Promise<void> => {
-  await server.start({ port })
-  console.log(`Listening on port ${port}`)
-}
-
-main().catch(console.log)
+main().catch(console.log);
