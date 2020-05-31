@@ -1,29 +1,38 @@
 {
-  "name": "myfood-graphql",
-  "version": "1.0.0",
-  "description": "A GraphQL API based on iFood app made with GraphQL, Node, TypeScript, MongoDB & Mongoose.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/italofelipe/graphql-myfood.git"
-  },
-  "author": "Italo Felipe",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/italofelipe/graphql-myfood/issues"
-  },
-  "homepage": "https://github.com/italofelipe/graphql-myfood#readme",
-  "devDependencies": {
-    "@types/node": "^14.0.5",
-    "nodemon": "^2.0.4",
-    "sucrase": "^3.15.0",
-    "typescript": "^3.9.3"
-  },
-  "dependencies": {
-    "graphql-yoga": "^1.18.3"
-  }
+	"name": "myfood-graphql",
+	"version": "1.0.0",
+	"description": "A GraphQL API based on iFood app made with GraphQL, Node, TypeScript, MongoDB & Mongoose.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon src/index.ts",
+		"lint": "eslint --fix --ext .js,.jsx ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/italofelipe/graphql-myfood.git"
+	},
+	"author": "Italo Felipe",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/italofelipe/graphql-myfood/issues"
+	},
+	"homepage": "https://github.com/italofelipe/graphql-myfood#readme",
+	"devDependencies": {
+		"@types/node": "^14.0.5",
+		"@typescript-eslint/eslint-plugin": "^3.0.2",
+		"@typescript-eslint/parser": "^3.0.2",
+		"eslint": "^7.1.0",
+		"eslint-config-standard": "^14.1.1",
+		"eslint-plugin-import": "^2.20.2",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
+		"nodemon": "^2.0.4",
+		"sucrase": "^3.15.0",
+		"typescript": "^3.9.3"
+	},
+	"dependencies": {
+		"graphql-yoga": "^1.18.3"
+	}
 }
