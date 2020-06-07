@@ -1,5 +1,5 @@
 import server from "./server";
-import { connect } from "./models/index";
+import { connect } from "./models";
 const { PORT: port = 4000 } = process.env;
 const main = async (): Promise<void> => {
   await connect();
