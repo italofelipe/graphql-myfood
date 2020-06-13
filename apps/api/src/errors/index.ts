@@ -1,1 +1,1 @@
-export * from "CustomError";
+export * from "./CustomError";
