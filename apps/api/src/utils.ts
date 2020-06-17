@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
-import { CheckExistenceOptions } from "./types";
+import { CheckExistenceOptions, TokenPayload } from "./types";
 import { CustomError } from "./errors/CustomError";
+import { SignOptions, sign } from "jsonwebtoken";
 const isMongoID = (value: string): boolean => {
   return Types.ObjectId.isValid(value);
 };
@@ -35,4 +36,6 @@ const checkExistence = async (
   return exists;
 };
 
-export { isMongoID, checkExistence };
+const issueToken = (payload: TokenPayload, options?: SignOptions): string =>
+  sign(payload, process.env.JWT_SECRET, { expiresIn: "2h", ...options });
+export { isMongoID, checkExistence, issueToken };

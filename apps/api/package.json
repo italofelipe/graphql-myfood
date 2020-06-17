@@ -19,6 +19,8 @@
 	},
 	"homepage": "https://github.com/italofelipe/graphql-myfood#readme",
 	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/jsonwebtoken": "^8.5.0",
 		"@types/mongoose": "^5.7.22",
 		"@types/node": "^14.0.5",
 		"@typescript-eslint/eslint-plugin": "^3.0.2",
@@ -37,8 +39,12 @@
 		"typescript": "^3.9.3"
 	},
 	"dependencies": {
+		"bcrypt": "^5.0.0",
+		"bcryptjs": "^2.4.3",
 		"graphql-middleware": "^4.0.2",
+		"graphql-tools": "^6.0.10",
 		"graphql-yoga": "^1.18.3",
+		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.9.17"
 	}
 }

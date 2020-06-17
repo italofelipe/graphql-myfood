@@ -1,3 +1,33 @@
+directive @auth(role: UserRole = USER) on FIELD_DEFINITION
+# Informando que o valor padrao pra UserRole e USER
+
+# User
+enum UserRole {
+  USER
+  ADMIN
+}
+type User {
+  _id: ID!
+  name: String!
+  email: String!
+  role: UserRole
+}
+input UserSignUpInput {
+  name: String!
+  email: String!
+  password: String!
+}
+input UserSignInInput {
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+# Product
 type Product {
   _id: ID!
   name: String!
@@ -14,8 +44,8 @@ enum Unit {
 }
 
 type Query {
-  products: [Product!]!
-  product(_id: ID!): Product!
+  products: [Product!]! @auth
+  product(_id: ID!): Product! @auth(role: ADMIN)
 }
 input ProductCreateInput {
   name: String!
@@ -32,6 +62,8 @@ input ProductUpdateInput {
 }
 
 type Mutation {
+  signin(data: UserSignInInput!): AuthPayload!
+  signup(data: UserSignUpInput!): AuthPayload!
   createProduct(data: ProductCreateInput!): Product!
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
   deleteProduct(_id: ID!): Product!
