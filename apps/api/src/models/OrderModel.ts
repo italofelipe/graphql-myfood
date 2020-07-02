@@ -8,7 +8,7 @@ const orderItemSchema = new Schema(
       ref: "Product",
       required: true,
     },
-    quantidade: {
+    quantity: {
       type: Number,
       required: true,
     },
@@ -47,6 +47,7 @@ const orderSchema = new Schema(
   },
   {
     timestamps: true,
+    useNestedStrict: true,
   },
 );
 

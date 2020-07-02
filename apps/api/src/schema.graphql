@@ -1,6 +1,7 @@
-directive @auth(role: UserRole = USER) on FIELD_DEFINITION
+directive @auth(role: UserRole) on FIELD_DEFINITION
 # Informando que o valor padrao pra UserRole e USER
 
+scalar DateTime
 # User
 enum UserRole {
   USER
@@ -42,10 +43,63 @@ enum Unit {
   GR
   KG
 }
+# Order
+enum OrderStatus {
+  WAITING_PAYMENT
+  IN_QUEUE
+  PREPARING
+  READY
+  ON_THE_WAY
+  DELIVERED
+}
 
+type Order {
+  _id: ID!
+  user: User!
+  total: Float!
+  status: OrderStatus!
+  items: [OrderItem!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+input OrderItemCreateInput {
+  product: ID!
+  quantity: Float!
+  total: Float!
+}
+input OrderCreateInput {
+  status: OrderStatus
+  items: [OrderItemCreateInput!]
+  user: ID
+}
+
+input OrderUpdateInput {
+  status: OrderStatus
+  user: ID
+  itemsToAdd: [OrderItemCreateInput!]
+  itemsToUpdate: [OrderItemUpdateInput!]
+  itemsToDelete: [ID!]
+}
+type OrderItem {
+  _id: ID!
+  product: Product!
+  quantity: Float!
+  total: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input OrderItemUpdateInput {
+  _id: ID!
+  product: ID!
+  quantity: Float!
+  total: Float!
+}
 type Query {
-  products: [Product!]! @auth
-  product(_id: ID!): Product! @auth(role: ADMIN)
+  orders: [Order!]! @auth
+  order(_id: ID!): Order! @auth
+  products: [Product!]!
+  product(_id: ID!): Product!
 }
 input ProductCreateInput {
   name: String!
@@ -64,7 +118,11 @@ input ProductUpdateInput {
 type Mutation {
   signin(data: UserSignInInput!): AuthPayload!
   signup(data: UserSignUpInput!): AuthPayload!
-  createProduct(data: ProductCreateInput!): Product!
+  createOrder(data: OrderCreateInput): Order! @auth
+  deleteOrder(_id: ID!): Order! @auth
+  updateOrder(data: OrderUpdateInput!, _id: ID!): Order! @auth
+  createProduct(data: ProductCreateInput!): Product! @auth(role: ADMIN)
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
-  deleteProduct(_id: ID!): Product!
+    @auth(role: ADMIN)
+  deleteProduct(_id: ID!): Product! @auth(role: ADMIN)
 }
