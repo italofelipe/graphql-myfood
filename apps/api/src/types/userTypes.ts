@@ -18,15 +18,15 @@ export interface UserDocument extends User, Document {
   _id: Types.ObjectId;
 }
 
-interface UserSiginData {
+interface UserSignInInput {
   email: string;
   password: string;
 }
-export interface UserSignUpInput {
-  data: UserSiginData & { name: string };
+export interface UserSignUpArgs {
+  data: UserSignInInput & { name: string };
 }
-export interface UserSignInInput {
-  data: UserSiginData;
+export interface UserSignInArgs {
+  data: UserSignInInput;
 }
 
 export interface AuthUser {

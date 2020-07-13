@@ -24,7 +24,7 @@ export interface OrderDocument extends Order, Document {
   _id: Types.ObjectId;
 }
 
-export interface OrderByIdInput {
+export interface OrderByIdArgs {
   _id: string;
 }
 

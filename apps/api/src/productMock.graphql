@@ -1,0 +1,49 @@
+mutation {
+  createProduct(
+    data: {
+      name: "Coca-Cola 2L"
+      price: 7
+      unit: UN
+      description: "Coca cola geladinha."
+    }
+  ) {
+    _id
+    name
+    price
+    unit
+    description
+  }
+}
+
+mutation {
+  createProduct(
+    data: {
+      name: "Pizza de Frango com Catupiry"
+      price: 29
+      unit: UN
+      description: "Contem mussarela, molho de tomate, frango e catupiry"
+    }
+  ) {
+    _id
+    name
+    price
+    unit
+    description
+  }
+}
+mutation {
+  createProduct(
+    data: {
+      name: "Crepe de chocolate"
+      price: 17
+      unit: UN
+      description: "Crepe de chocolate cremoso"
+    }
+  ) {
+    _id
+    name
+    price
+    unit
+    description
+  }
+}

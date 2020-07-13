@@ -1,6 +1,6 @@
 import { Types, Document, Model } from "mongoose";
 import {
-  CheckExistenceOptions,
+  FindDocumentOptions,
   TokenPayload,
   OrderItemSubdocument,
 } from "./types";
@@ -10,7 +10,7 @@ const isMongoID = (value: string): boolean => {
   return Types.ObjectId.isValid(value);
 };
 const findDocument = async <T extends Document>(
-  opts: CheckExistenceOptions,
+  opts: FindDocumentOptions,
 ): Promise<boolean> => {
   const {
     db,

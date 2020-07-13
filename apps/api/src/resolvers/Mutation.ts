@@ -1,11 +1,11 @@
 import { hash, compare } from "bcryptjs";
 import {
-  ProductCreateInput,
-  ProductByIdInput,
+  ProductCreateArgs,
+  ProductByIdArgs,
   Resolver,
-  ProductUpdateInput,
-  UserSignUpInput,
-  UserSignInInput,
+  ProductUpdateArgs,
+  UserSignUpArgs,
+  UserSignInArgs,
   ProductDocument,
   OrderCreateArgs,
   UserRole,
@@ -17,13 +17,13 @@ import { findDocument, issueToken, findOrderItem } from "../utils";
 import { CustomError } from "../errors/CustomError";
 import { Types } from "mongoose";
 
-const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
+const createProduct: Resolver<ProductCreateArgs> = (_, args, { db }) => {
   const { Product } = db;
   const { data } = args;
   const product = new Product(data);
   return product.save();
 };
-const deleteProduct: Resolver<ProductByIdInput> = async (_, args, { db }) => {
+const deleteProduct: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args;
   const product = await findDocument<ProductDocument>({
     db,
@@ -34,7 +34,7 @@ const deleteProduct: Resolver<ProductByIdInput> = async (_, args, { db }) => {
   return product.remove();
 };
 
-const updateProduct: Resolver<ProductUpdateInput> = async (_, args, { db }) => {
+const updateProduct: Resolver<ProductUpdateArgs> = async (_, args, { db }) => {
   const { _id, data } = args;
   const product = await findDocument<ProductDocument>({
     db,
@@ -45,7 +45,7 @@ const updateProduct: Resolver<ProductUpdateInput> = async (_, args, { db }) => {
   Object.keys(data).forEach((key) => (product[key] = data[key]));
   return product.save();
 };
-const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
+const signin: Resolver<UserSignInArgs> = async (_, args, { db }) => {
   const { User } = db;
   const { email, password } = args.data;
   const error = new CustomError(
@@ -65,7 +65,7 @@ const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
   const token = issueToken({ sub, role });
   return { token, user };
 };
-const signup: Resolver<UserSignUpInput> = async (_, args, { db }) => {
+const signup: Resolver<UserSignUpArgs> = async (_, args, { db }) => {
   const { User } = db;
   const { data } = args;
 
@@ -150,10 +150,9 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   const foundItemsToUpdate = itemsToUpdate.map((orderItem) => {
     findOrderItem(order.items, orderItem._id, "update");
   });
-  const foundItemsToDelete = itemsToDelete.map((orderItemId) => {
-    findOrderItem(order.items, orderItemId, "delete");
-  });
-
+  const foundItemsToDelete = itemsToDelete.map((orderItemId) =>
+    findOrderItem(order.items, orderItemId, "delete"),
+  );
   foundItemsToUpdate.forEach((orderItem, index) => {
     orderItem.set(itemsToUpdate[index]);
   });
@@ -161,9 +160,9 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   foundItemsToDelete.forEach((orderItem) => orderItem.remove());
 
   itemsToAdd.forEach((itemToAdd) => {
-    const foundItem = order.items.find((item) => {
-      (item.product as Types.ObjectId).equals(itemToAdd.product);
-    });
+    const foundItem = order.items.find((item) =>
+      (item.product as Types.ObjectId).equals(itemToAdd.product),
+    );
 
     if (foundItem) {
       return foundItem.set({

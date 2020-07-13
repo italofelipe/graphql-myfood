@@ -1,0 +1,17 @@
+mutation {
+  signup(
+    data: {
+      name: "Italo Chagas"
+      email: "italo.felipe12@hotmail.com"
+      password: "123456"
+    }
+  ) {
+    token
+    user {
+      _id
+      name
+      email
+      role
+    }
+  }
+}
