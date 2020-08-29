@@ -47,3 +47,21 @@ mutation {
     description
   }
 }
+
+
+mutation {
+  createProduct(
+    data: {
+      name: "Guarana Antarctica 2L"
+      price: 7
+      unit: UN
+      description: "Guarana Antarctica, geladinho."
+    }
+  ) {
+    _id
+    name
+    price
+    unit
+    description
+  }
+}
