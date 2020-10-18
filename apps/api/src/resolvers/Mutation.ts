@@ -25,7 +25,7 @@ const createProduct: Resolver<ProductCreateArgs> = (_, args, { db }) => {
 };
 const deleteProduct: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args;
-  const product = await findDocument<ProductDocument>({
+  const product: any = await findDocument<ProductDocument>({
     db,
     model: "Product",
     field: "_id",
@@ -36,7 +36,7 @@ const deleteProduct: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
 
 const updateProduct: Resolver<ProductUpdateArgs> = async (_, args, { db }) => {
   const { _id, data } = args;
-  const product = await findDocument<ProductDocument>({
+  const product: any = await findDocument<ProductDocument>({
     db,
     model: "Product",
     field: "_id",
@@ -111,7 +111,7 @@ const deleteOrder: Resolver<OrderDeleteArgs> = async (
   const { _id: userId, role } = authUser;
 
   const where = role === UserRole.USER ? { _id, user: userId } : null;
-  const order = await findDocument<OrderDocument>({
+  const order: any = await findDocument<OrderDocument>({
     db,
     model: "Order",
     field: "_id",
@@ -131,7 +131,7 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   const isAdmin = role === UserRole.ADMIN;
   const where = !isAdmin ? { _id, user: userId } : null;
 
-  const order = await findDocument<OrderDocument>({
+  const order: any = await findDocument<OrderDocument>({
     db,
     model: "Order",
     field: "_id",
@@ -147,16 +147,15 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
     status,
   } = args.data;
 
-  const foundItemsToUpdate = itemsToUpdate.map((orderItem) => {
-    return findOrderItem(order.items, orderItem._id, "update");
-  });
-  const foundItemsToDelete = itemsToDelete.map((orderItemId) => {
-    return findOrderItem(order.items, orderItemId, "delete");
-  });
-  foundItemsToUpdate.forEach((orderItem, index) => {
-    console.log("Order item:", orderItem);
-    return orderItem.set(itemsToUpdate[index]);
-  });
+  const foundItemsToUpdate = itemsToUpdate.map((orderItem) =>
+    findOrderItem(order.items, orderItem._id, "update"),
+  );
+  const foundItemsToDelete = itemsToDelete.map((orderItemId) =>
+    findOrderItem(order.items, orderItemId, "delete"),
+  );
+  foundItemsToUpdate.forEach((orderItem, index) =>
+    orderItem.set(itemsToUpdate[index]),
+  );
 
   foundItemsToDelete.forEach((orderItem) => orderItem.remove());
 
@@ -177,7 +176,9 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   order.user = user;
   order.status = status || order.status;
   order.total = total;
-  return order.save();
+  await order.save();
+
+  return order;
 };
 export default {
   createOrder,
