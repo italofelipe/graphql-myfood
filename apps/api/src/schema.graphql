@@ -204,7 +204,19 @@ input OrderItemUpdateInput {
   total: Float!
 }
 
+input OrderSubscriptionWhereInput {
+  mutationIn: [MutationType!]!
+}
+type OrderSubscriptionPayload {
+  mutation: MutationType!
+  node: Order!
+}
 
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
 type Query {
   orders(
     skip: Int
@@ -232,4 +244,8 @@ type Mutation {
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
     @auth(role: ADMIN)
   deleteProduct(_id: ID!): Product! @auth(role: ADMIN)
+}
+
+type Subscription {
+  order(where: OrderSubscriptionWhereInput!): OrderSubscriptionPayload! @auth
 }

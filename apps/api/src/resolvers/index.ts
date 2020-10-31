@@ -1,16 +1,17 @@
-import Query from "./Query";
 import Mutation from "./Mutation";
 import Order from "./Order";
 import OrderItem from "./OrderItem";
 import ProductOrderByInput from "./ProductOrderByInput";
+import Query from "./Query";
 import OrderOrderByInput from "./OrderOrderByInput";
+import Subscription from "./Subscriptions";
 
-console.log("Resolvers: ", ProductOrderByInput);
 export default {
-  Query,
   Mutation,
   Order,
   OrderItem,
-  OrderOrderByInput,
   ProductOrderByInput,
+  OrderOrderByInput,
+  Query,
+  Subscription,
 };
